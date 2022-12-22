@@ -1,34 +1,37 @@
 fn main() {
     let mut total = 0;
-    for (i, line) in include_str!("../input.txt").split("\n") {
-        let mut comp1_lower: [i32; 26] = [0; 26];
-        let mut comp1_upper: [i32; 26] = [0; 26];
-        let mut comp2_lower: [i32; 26] = [0; 26];
-        let mut comp2_upper: [i32; 26] = [0; 26];
-        let half = line.len() / 2;
-        for (i, c) in line.chars().enumerate() {
-            if i < half {
-                if c.is_lowercase() {
-                    comp1_lower[(c as usize) - ('a' as usize)] += 1;
-                } else {
-                    comp1_upper[(c as usize) - ('A' as usize)] += 1;
-                }
-            } else {
-                if c.is_lowercase() {
-                    comp2_lower[(c as usize) - ('a' as usize)] += 1;
-                } else {
-                    comp2_upper[(c as usize) - ('A' as usize)] += 1;
-                }
+    let mut lines = include_str!("../input.txt").split("\n");
+    let count = lines.clone().count();
+    if count < 3 {
+        println!("Invalid input");
+        return;
+    }
+    let mut i = 0;
+    while i < count {
+        let arr1 = get_array(lines.next().unwrap(), false);
+        let arr2 = get_array(lines.next().unwrap(), false);
+        let arr3 = get_array(lines.next().unwrap(), false);
+        for j in 0..52 {
+            if arr1[j] > 0 && arr2[j] > 0 && arr3[j] > 0 {
+                total += j + 1;
             }
         }
-        for i in 0..26 {
-            if comp1_lower[i] > 0 && comp2_lower[i] > 0 {
-                total += i + 1;
-            }
-            if comp1_upper[i] > 0 && comp2_upper[i] > 0 {
-                total += i + 27;
-            }
-        }
+        i += 3;
     }
     println!("{}", total);
+}
+
+fn get_array(line: &str, print: bool) -> [i32; 52] {
+    let mut arr: [i32; 52] = [0; 52];
+    for c in line.chars() {
+        if c.is_lowercase() {
+            arr[(c as usize) - ('a' as usize)] += 1;
+        } else {
+            if print {
+                println!("{}", ((c as usize) - ('A' as usize)) + 26);
+            }
+            arr[((c as usize) - ('A' as usize)) + 26] += 1;
+        }
+    }
+    return arr;
 }
