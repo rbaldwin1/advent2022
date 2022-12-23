@@ -8,9 +8,9 @@ fn main() {
     }
     let mut i = 0;
     while i < count {
-        let arr1 = get_array(lines.next().unwrap(), false);
-        let arr2 = get_array(lines.next().unwrap(), false);
-        let arr3 = get_array(lines.next().unwrap(), false);
+        let arr1 = get_array(lines.next().unwrap());
+        let arr2 = get_array(lines.next().unwrap());
+        let arr3 = get_array(lines.next().unwrap());
         for j in 0..52 {
             if arr1[j] > 0 && arr2[j] > 0 && arr3[j] > 0 {
                 total += j + 1;
@@ -21,15 +21,12 @@ fn main() {
     println!("{}", total);
 }
 
-fn get_array(line: &str, print: bool) -> [i32; 52] {
+fn get_array(line: &str) -> [i32; 52] {
     let mut arr: [i32; 52] = [0; 52];
     for c in line.chars() {
         if c.is_lowercase() {
             arr[(c as usize) - ('a' as usize)] += 1;
         } else {
-            if print {
-                println!("{}", ((c as usize) - ('A' as usize)) + 26);
-            }
             arr[((c as usize) - ('A' as usize)) + 26] += 1;
         }
     }

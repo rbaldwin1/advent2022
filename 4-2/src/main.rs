@@ -9,7 +9,7 @@ fn main() {
         let max1 = range1.next().unwrap().parse::<i32>().unwrap();
         let min2 = range2.next().unwrap().parse::<i32>().unwrap();
         let max2 = range2.next().unwrap().parse::<i32>().unwrap();
-        if (min1 >= min2 && max1 <= max2) || (min2 >= min1 && max2 <= max1) {
+        if (max1 >= min2 && min1 <= min2) || (max2 >= min1 && min2 <= min1) {
             total += 1;
         }
     }
